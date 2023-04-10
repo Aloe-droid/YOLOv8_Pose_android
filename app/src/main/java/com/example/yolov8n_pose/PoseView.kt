@@ -35,7 +35,6 @@ class PoseView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     private fun drawPointsAndLines(canvas: Canvas?) {
         val scaleX = width / DataProcess.INPUT_SIZE.toFloat()
-        // val scaleY = height / DataProcess.INPUT_SIZE.toFloat()
         val scaleY = scaleX * 9f / 16f
         val realY = width * 9f / 16f
         val diffY = realY - height

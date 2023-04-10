@@ -35,14 +35,18 @@ class PoseView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     private fun drawPointsAndLines(canvas: Canvas?) {
         val scaleX = width / DataProcess.INPUT_SIZE.toFloat()
-        val scaleY = height / DataProcess.INPUT_SIZE.toFloat()
+        // val scaleY = height / DataProcess.INPUT_SIZE.toFloat()
+        val scaleY = scaleX * 9f / 16f
+        val realY = width * 9f / 16f
+        val diffY = realY - height
+
         val kPointsThreshold = 0.35f
         list?.forEach {
             val points = FloatArray(34)
             for ((a, i) in (points.indices step 2).withIndex()) {
                 if (it[i + 7 + a] > kPointsThreshold) {
                     points[i] = it[i + 5 + a] * scaleX
-                    points[i + 1] = it[i + 6 + a] * scaleY
+                    points[i + 1] = it[i + 6 + a] * scaleY - (diffY / 2f)
                 }
             }
             drawPoint(canvas, points)

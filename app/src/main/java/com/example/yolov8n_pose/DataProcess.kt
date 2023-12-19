@@ -6,6 +6,8 @@ import android.graphics.RectF
 import androidx.camera.core.ImageProxy
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,8 +30,10 @@ class DataProcess(val context: Context) {
 
     fun bitmapToFloatBuffer(bitmap: Bitmap): FloatBuffer {
         val imageSTD = 255f
-        val buffer = FloatBuffer.allocate(BATCH_SIZE * PIXEL_SIZE * INPUT_SIZE * INPUT_SIZE)
-        buffer.rewind()
+
+        val cap = BATCH_SIZE * PIXEL_SIZE * INPUT_SIZE * INPUT_SIZE
+        val order = ByteOrder.nativeOrder()
+        val buffer = ByteBuffer.allocateDirect(cap * Float.SIZE_BYTES).order(order).asFloatBuffer()
 
         val area = INPUT_SIZE * INPUT_SIZE
         val bitmapData = IntArray(area)
